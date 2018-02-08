@@ -1,0 +1,221 @@
+#================================================================================================================================================================#
+#                                                               Configuring SkyBan Plugin Messages                                                               #
+#                                                                                                                                                                #
+#                                                                                                                                                                #
+#                                                                           Version 1.0                                                                          #
+#                                                                                                                                                                #
+#                                                                                                                                                                #
+#                                              You can modify them as you wish, but do not appropriate the plugin !                                              #
+#                                                                                                                                                                #
+#                                                                                                                                                                #
+#                                                                 Plugin develop by CanardConfit                                                                 #
+#================================================================================================================================================================#
+
+
+start-message:
+  #These messages appear when the plugin turns on or off.
+  start: 'SkyBan >> Plugin SkyBan Activate !'
+  stop: 'SkyBan >> Plugin SkyBan disable !'
+
+
+error-message:
+  #These messages appear when a problem occurs lore of a unban or other.
+  remove-ban-delete-file: 'SkyBan >> Lore of a ban remove, there was a problem ! (Could not delete file)'
+  remove-ban-rename-file: 'SkyBan >> Lore of a ban remove, there was a problem ! (Could not rename tempFile)'
+  add-ban-delete-file: 'SkyBan >> Lore of a ban add, there was a problem ! (Could not delete file)'
+  add-ban-rename-file: 'SkyBan >> Lore of a ban add, there was a problem ! (Could not rename tempFile)'
+  change-playerinfo-delete-file: 'SkyBan >> When there was a change in player info, there was a problem ! &4(Could not delete file)'
+  change-playerinfo-rename-file: 'SkyBan >> When there was a change in player info, there was a problem ! &4(Could not rename tempFile)'
+  add-mute-delete-file: 'SkyBan >> Lore of a mute add, there was a problem ! (Could not delete file)'
+  add-mute-rename-file: 'SkyBan >> Lore of a mute add, there was a problem ! (Could not rename tempFile)'
+  remove-mute-delete-file: 'SkyBan >> Lore of a mute remove, there was a problem ! (Could not delete file)'
+  remove-mute-rename-file: 'SkyBan >> Lore of a mute remove, there was a problem ! (Could not rename tempFile)'
+  add-playerinfo-delete-file: 'SkyBan >> Lore of an added player info, there was a problem ! (Could not delete file)'
+  add-playerinfo-rename-file: 'SkyBan >> Lore of an added player info, there was a problem ! (Could not rename tempFile)'
+
+
+ban-message:
+  #These messages appear when a player is banned (Eject).
+  #tempban = temporarily banished.
+  #permban = permanently banished.
+  tempban-message: '&4&lSkyBan &6You are banned by &e%banby%&6 for : &a%reason%&7 You will be unban in &3%unbandate% &bIP TeamSpeak : ts3.andronetwork.net'
+  permban-message: '&4&lSkyBan &6You are banned by &e%banby%&6 for : &a%reason%&7 You will never be unban &bIP TeamSpeak : ts3.andronetwork.net'
+
+  #When a player joins the server and his ban has expired, it is displayed in the console.
+  ban-expire-console: 'SkyBan >> %bannedplayer% was unban because his ban has expired !'
+
+
+mute-message:
+  #This message appears when a player is mute.
+  mute-message: '&4SkyBan &c>> &eYou are muted by &b%banby% &efor the reason : &f%reason% &6(%bantime%)'
+
+  #The variable is visible when a mute is permanent.
+  perm-mute: 'Permanent'
+
+  #When someone speaks while he is muttered he receives this message.
+  speak-on-muted: '&4&lSkyBan &c>> &eYou are muted by &b%muteby% &efor the reason : &f%reason% &eYou will be unmute the : &6%unmutedate%'
+
+  #Sa also sends a message to the Staff and the console.
+  msg-on-mute-to-staff: '&4&lSkyBan &c>> &4%mute%" &eto send a message by being muted &6(&f%message%&6)'
+  msg-on-mute-to-console: 'SkyBan >> %mute% to send a message by being muted ! (%message%)'
+
+  #When a player speaks and his mute has expired, a message appears in the console.
+  mute-expire-console: 'SkyBan >> %mute% was unmute because his mute has expired !'
+
+
+broadcast-message:
+  #These messages are sent to all players when a player is banned or mute.
+  #tempban (ip) = temporarily banned (ip).
+  #permban (ip) = permanently banned (ip).
+  #unban (ip) = to forgive a player (ip).
+  tempban-message: '&4&lSkyBan &c>> &4%bannedplayer% &ewas banned from the server by &a%banby% &efor the reason : &f%reason% &6(%bantime%&6)'
+  permban-message: '&4&lSkyBan &c>> &4%bannedplayer% &ewas banned from the server by &a%banby% &efor the reason : &f%reason% &6(Ban &6Perm)'
+  unban-message: '&4&lSkyBan &c>> &4%bannedplayer% &ewas unban from the server by &a%unbanby% &e!'
+  tempbanip-message: '&4&lSkyBan &c>> &4An IP &ewas banned from the server by &a%banby% &efor the reason : &f%reason% &6(%bantime%&6)'
+  permbanip-message: '&4&lSkyBan &c>> &4An IP &ewas banned from the server by &a%banby% &efor the reason : &f%reason% &6(Ban &6Perm)'
+  unbanip-message: '&4&lSkyBan &c>> &4An IP &ewas unban from the server by &a%unbanby% &e!'
+
+  #-console = mute by the console.
+  tempban-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas banned from the server by &a%console% &efor the reason : &f%reason% &6(%bantime%&6)'
+  permban-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas banned from the server by &a%console% &efor the reason : &f%reason% &6(Ban &6Perm)'
+  unban-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas unban from the server by &a%console% &e!'
+  tempbanip-message-console: '&4&lSkyBan &c>> &4An IP &ewas banned from the server by &a%console% &efor the reason : &f%reason% &6(%bantime%&6)'
+  permbanip-message-console: '&4&lSkyBan &c>> &4An IP &ewas banned from the server by &a%console% &efor the reason : &f%reason% &6(Ban &6Perm)'
+  unbanip-message-console: '&4&lSkyBan &c>> &4An IP &ewas unban from the server by &a%console% &e!'
+
+  #tempmute = temporarily mute.
+  #permmute = mutate definitively.
+  tempmute-message: '&4&lSkyBan &c>> &4%bannedplayer% &ewas muted from the server by &a%banby% &efor the reason : &f%reason% &6(%bantime%&6)'
+  permmute-message: '&4&lSkyBan &c>> &4%bannedplayer% &ewas muted from the server by &a%banby% &efor the reason : &f%reason% &6(Mute &6Perm)'
+  unmute-message: '&4&lSkyBan &c>> &4%bannedplayer% &ewas unmute from the server by &a%unbanby% &e!'
+
+  #-console = mute by the console.
+  tempmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas muted from the server by &a%console% &efor the reason : &f%reason% &6(%bantime%&6)'
+  permmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas muted from the server by &a%console% &efor the reason : &f%reason% &6(Mute &6Perm)'
+  unmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas unmute from the server by &a%console% &e!'
+
+
+utilisation-message:
+  #These messages appear when you type a command with no arguments or the command is not correct.
+  utilisation-gban: '&4&lSkyBan &c>> &eUse : &b/gban <player> <reason>'
+  utilisation-gbanip: '&4&lSkyBan &c>> &eUse : &b/gbanip <player/IP> <reason>'
+  utilisation-gtempban: '&4&lSkyBan &c>> &eUse : &b/gtempban <player> <number + s/m/h/d> <reason>'
+  utilisation-gtempbanip: '&4&lSkyBan &c>> &eUse : &b/gtempbanip <player/IP> <number + s/m/h/d> <reason>'
+  utilisation-gmute: '&4&lSkyBan &c>> &eUse : &b/gtempmute <player> <number + s/m/h/d OR infinie> <reason>'
+  utilisation-gunmute: '&4&lSkyBan &c>> &eUse : &b/gunmute <player>'
+  utilisation-lookup: '&4&lSkyBan &c>> &eUse : &b/lookup <player/IP>'
+  utilisation-gunban: '&4&lSkyBan &c>> &eUse : &b/gunban <player>'
+  utilisation-gunbanip: '&4&lSkyBan &c>> &eUse : &b/gunbanip <player/IP>'
+
+
+command-message:
+  #These messages are used as the reason for ban or mute by default.
+  default-reason-ban: 'Banned by a member of the staff ! '
+  default-reason-mute: 'Muted by a member of the staff ! '
+
+  #This message is used to warn the player that he is a permanent mute / ban.
+  muteperm: 'Mute a Life'
+
+  #This message is used when a player is already banned.
+  alreadyban: '&4&lSkyBan &c>> &b%player% &eis already banned !'
+
+  #This message is sent when an ip address does not have one.
+  ipnotvalide: '&4&lSkyBan &c>> &eInvalid IP !'
+  itsnotip: '&4&lSkyBan &c>> &b%ip% &eis not an ip !'
+
+
+lookup-info:
+  #This part is for the / lookup, I do not advise you to touch it, but if you really want it here is how it works:
+  #the spaces (example line2) can not accommodate variable (% example%).
+  #You can not swap rows (you can not swap the line1 by the line5 for example).
+  info-player:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: '&eThe Player &c%bannedplayer% &eis banned &e!'
+    line2: ' '
+    line3: '&6Ban Info :'
+    line4: ' '
+    line5: '&eDate of ban : &b%datebanned%'
+    line6: '&eDate of unban : &b%unbandate%'
+    line7: '&eBanned by : &a%banby%'
+    line8: '&eReason : &f%reason%'
+    line9: ' '
+    line10: '&eThe Player &c%mutedplayer% &eis muted &e!'
+    line11: ' '
+    line12: '&6Mute Info :'
+    line13: ' '
+    line14: '&eDate of mute : &b%datemuted%'
+    line15: '&eDate of unmute : &b%unmutedate%'
+    line16: '&eMuted by : &a%muteby%'
+    line17: '&eReason : &f%reason%'
+    line18: ' '
+    line19: '&eLast know ip : &7%ipplayer%'
+    line20: '&eLast connection : &7%lastco%'
+    line21: '&efirst connection : &7%firstco%'
+    line22: '&eNumber of mute : &7%nbmute%'
+    line23: '&eNumber of ban : &7%nbban%'
+    line24: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    error-message:
+      #Messages added to the top line if the player is not banned or mutated.
+      noban: '&eThe Player &c%player% &eis not banned &e!'
+      nomute: '&eThe Player &c%player% &eis not muted &e!'
+
+      #Message error that the ask player does not exist.
+      line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+      line1: '&eThe Player &c%player% &enever came to the server'
+      line2: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+
+      #Message that adds to the top line if the player and banned or mute permanent.
+      banperm: 'Ban Perm'
+      muteperm: 'Mute Perm'
+
+
+  info-ip:
+    #This part is the same as above but for ip address.
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: '&eThe IP &c%bannedip% &eis banned &e!'
+    line2: ' '
+    line3: '&6Ban Info :'
+    line4: ' '
+    line5: '&eDate of ban : &b%datebanned%'
+    line6: '&eDate of unban : &b%unbandate%'
+    line7: '&eBanned by : &a%banby%'
+    line8: '&eReason : &f%reason%'
+    line9: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    error-message:
+      #If the ip address ask is not banned.
+      line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+      line1: '&eThe ip &c%ipplayer% &eis not banned &e!'
+      line2: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+
+
+time:
+  #This category is for players to know how long another player is ban / mute.
+  seconds: ' Second(s)'
+  minutes: ' Minute(s)'
+  hours: ' Hour(s)'
+  day: ' Day(s)'
+
+  #This line is only for the mute.
+  perm: 'Permanent'
+
+
+help-command:
+  #This category is for the help command.
+  line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  line1: ' '
+  line2: '&6Welcome to &4&lSkyBan &6Version &a1.0 &6!'
+  line3: '&6Plugin develop by CanardConfit'
+  line4: '&cThank you for not taking &4&lownership &c!'
+  line5: ' '
+  line6: '&7Commands :'
+  line7: ' '
+  line8: '&b/gban &c>> &eAllow to ban a permanent player.'
+  line9: '&b/gbanip &c>> &eAllow to ban an ip address.'
+  line10: '&b/gtempban &c>> &eAllow to ban a player temporarily.'
+  line11: '&b/gtempbanip &c>> &eAllow to ban an ip address temporarily.'
+  line12: '&b/gunban &c>> &eAllow unban a player.'
+  line13: '&b/gunbanip &c>> &eAllow unban an ip address.'
+  line14: '&b/gtempmute &c>> &eMute a player.'
+  line15: '&b/gunmute &c>> &eAllow unmute a player.'
+  line16: '&b/lookup &c>> &eLets you see the information of a player / ip.'
+  line17: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='

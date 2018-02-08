@@ -1,0 +1,32 @@
+#================================================================================================================================================================#
+#                                                           Configuration des Options du Plugin SkyBan                                                           #
+#                                                                                                                                                                #
+#                                                                                                                                                                #
+#                                                                           Version 1.0                                                                          #
+#                                                                                                                                                                #
+#                                                                                                                                                                #
+#                                      Vous pouvez les modifier comme bon vous semble, mais ne pas s'approprier le plugin !                                      #
+#                                                                                                                                                                #
+#                                                                                                                                                                #
+#                                                               Plugin developper par CanardConfit                                                               #
+#================================================================================================================================================================#
+
+
+#Activer les commandes de ban (gban, gbanip, gtempban, gtempbanip, gunban, gunbanip).
+ban-activate: true
+
+
+#Activer les commandes de mute (gtempmute, gunmute).
+mute-activate: true
+
+
+#Tu peux choisir entre 2 langue pour le moment, français (FR) ou anglais (ENG)
+
+#/!\ Attention si tu change de langue les messages et la configuration serons supprimé et remplacer par celle dans la langue selectionner /!\
+
+#Le plugin n'est pas dans ta langue ? Personalise l'integralité des messages du plugin et
+#partage les sur la page du plugin pour que tout le monde en profite !
+lang: 'FR'
+
+#Si vous voulez changer de langue en restartant le serveur, mettez sur true et ne toucher plus
+changeonstart: false
