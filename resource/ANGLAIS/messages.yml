@@ -33,6 +33,11 @@ error-message:
   add-playerinfo-delete-file: 'SkyBan >> Lore of an added player info, there was a problem ! (Could not delete file)'
   add-playerinfo-rename-file: 'SkyBan >> Lore of an added player info, there was a problem ! (Could not rename tempFile)'
 
+  #These messages are for the MySql part if the option is enabled in the configuration.
+  mysql-database-connected: 'SkyBan >> Connection to the database %database% successful !'
+  mysql-error-on-connected: 'SkyBan >> A problem occurred when connecting to the mysql server! This can be because of the password or the host !'
+  mysql-database-connection-terminate: 'SkyBan >> Connection to mysql server terminated !'
+  mysql-database-dont-exist: 'SkyBan >> The database %database% dont exist !'
 
 ban-message:
   #These messages appear when a player is banned (Eject).
@@ -61,6 +66,14 @@ mute-message:
 
   #When a player speaks and his mute has expired, a message appears in the console.
   mute-expire-console: 'SkyBan >> %mute% was unmute because his mute has expired !'
+
+
+kick-message:
+  #This message appears when a player is kick.
+  kick-message: '&4&lSkyBan &c>> &6You ve been Kick by &e%kickby% &6for: &a%reason% &bIP TeamSpeak: ts3.example.net'
+
+  #This message appears when the player has kick does not connect.
+  no-connected: '&4&lSkyBan &c>> &a%player% &eis not connected !'
 
 
 broadcast-message:
@@ -94,6 +107,9 @@ broadcast-message:
   permmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas muted from the server by &a%console% &efor the reason : &f%reason% &6(Mute &6Perm)'
   unmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ewas unmute from the server by &a%console% &e!'
 
+  #console = kick by the console.
+  kick-message: '&4&lSkyBan &c>> &4%kickedplayer% &ewas kicked from the server by &a%kickby% &efor the reason: &f%reason%'
+  kick-message-console: '&4&lSkyBan &c>> &4%kickedplayer% &ewas kicked from the server by &a%console% &efor the reason : &f%reason%'
 
 utilisation-message:
   #These messages appear when you type a command with no arguments or the command is not correct.
@@ -106,12 +122,15 @@ utilisation-message:
   utilisation-lookup: '&4&lSkyBan &c>> &eUse : &b/lookup <player/IP>'
   utilisation-gunban: '&4&lSkyBan &c>> &eUse : &b/gunban <player>'
   utilisation-gunbanip: '&4&lSkyBan &c>> &eUse : &b/gunbanip <player/IP>'
+  utilisation-gkick: '&4&lSkyBan &c>> &eUse : &b/gkick <player> <reason>'
+  utilisation-skyconvert: '&4&lSkyBan &c>> &eUse : &b/skyconvert &efor view sub-command.'
 
 
 command-message:
-  #These messages are used as the reason for ban or mute by default.
+  #These messages are used as the reason for ban, mute or kick by default.
   default-reason-ban: 'Banned by a member of the staff ! '
   default-reason-mute: 'Muted by a member of the staff ! '
+  default-reason-kick: 'Kicked by a member of the staff ! '
 
   #This message is used to warn the player that he is a permanent mute / ban.
   muteperm: 'Mute a Life'
@@ -153,7 +172,8 @@ lookup-info:
     line21: '&efirst connection : &7%firstco%'
     line22: '&eNumber of mute : &7%nbmute%'
     line23: '&eNumber of ban : &7%nbban%'
-    line24: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line24: '&eNumber of kick : &7%nbkick%'
+    line25: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
     error-message:
       #Messages added to the top line if the player is not banned or mutated.
       noban: '&eThe Player &c%player% &eis not banned &e!'
@@ -218,4 +238,56 @@ help-command:
   line14: '&b/gtempmute &c>> &eMute a player.'
   line15: '&b/gunmute &c>> &eAllow unmute a player.'
   line16: '&b/lookup &c>> &eLets you see the information of a player / ip.'
-  line17: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  line17: '&b/gkick &c>> &eAllow kick a player.'
+  line18: '&b/skyconvert &c>> &eAllows you to change the backup mode.'
+  line19: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+
+
+convert-command:
+  #This category is for the command /skyconvert. I do not advise you not to touch it.
+  noargs:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: ' '
+    line2: '&cUse :'
+    line3: ' '
+    line4: '&b/skyconvert convert <host mysql> <database name> <username> <password or &e*@* &bif no password>'
+    line5: '&eThis command allows you to change the backup mode.'
+    line6: ' '
+    line7: '&b/skyconvert status'
+    line8: '&eThis command allows you to see the backup status.'
+    line9: ' '
+    line10: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  status:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: ' '
+    line2: '&cStatus :'
+    line3: ' '
+    line4: '&eBackup file : %file-status%'
+    line5: '&eBackup MySql : %mysql-status%'
+    line6: ' '
+    line7: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  convert:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: ' '
+    line2: '&b/skyconvert convert <host mysql> <database name> <username> <password or &e*@* &bif no password>'
+    line3: '&eThis command allows you to change the backup mode txt file'
+    line4: '&ein mysql backup mode.'
+    line5: ' '
+    line6: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+
+
+convert-message:
+  #This category is for conversion command.
+  #the line0, line1 are the top of the message that we receive the different steps.
+  line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  line1: ' '
+  #the line2-* are the information you can see when command.
+  line2-error: '&cError ! Cancellation of the conversion!'
+  line2-file-write: '&eRewriting the configuration file...'
+  line2-connect-db: '&eConnection to the database...'
+  line2-convert-info: '&eConverts text data to mysql data...'
+  line2-connection-succes: '&aConnection successful!'
+  line2-convert-succes: '&aConvertion successful and terminate !'
+  #the line3, line4 are the bottom of the message that we receive the different steps.
+  line3: ' '
+  line4: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='

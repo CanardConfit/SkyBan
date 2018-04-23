@@ -33,6 +33,11 @@ error-message:
   add-playerinfo-delete-file: 'SkyBan >> Lore d un add de playerinfo, il y a eu un probleme ! (Could not delete file)'
   add-playerinfo-rename-file: 'SkyBan >> Lore d un add de playerinfo, il y a eu un probleme ! (Could not rename tempFile)'
 
+  #Ces mesages sont pour la partie MySql si l'option est activé dans la config.
+  mysql-database-connected: 'SkyBan >> Connection a la base de donnee %database% reussi !'
+  mysql-error-on-connected: 'SkyBan >> Un Probleme est survenu lore de la connection avec le serveur mysql ! Cela peux etre a cause du mot de passe ou de l host !'
+  mysql-database-connection-terminate: 'SkyBan >> Connection au serveur mysql arreter !'
+  mysql-database-dont-exist: 'SkyBan >> Il n existe pas de base de donnee avec le nom %database% !'
 
 ban-message:
   #Ces messages apparaissent quand un joueur est bannis (Ejecter).
@@ -61,6 +66,14 @@ mute-message:
 
   #Quand un joueur parle et que son mute a expirer se message s'affiche dans la console.
   mute-expire-console: 'SkyBan >> %mute% a ete unmute car son mute a expirer'
+
+
+kick-message:
+  #Ce message apparait quand un joueur est kick.
+  kick-message: '&4&lSkyBan &c>> &6Vous avez été Kick par &e%kickby% &6pour : &a%reason% &bIP TeamSpeak : ts3.exemple.net'
+
+  #Ce message apparait quand le joueur a kick n'est pas connecter.
+  no-connected: '&4&lSkyBan &c>> &a%player% &en est pas connecter !'
 
 
 broadcast-message:
@@ -94,6 +107,9 @@ broadcast-message:
   permmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ea ete mute du serveur par &a%console% &epour la raison : &f%reason% &6(Mute &6Perm)'
   unmute-message-console: '&4&lSkyBan &c>> &4%bannedplayer% &ea ete unmute du serveur par &a%console% &e!'
 
+  #console = kick par la console.
+  kick-message: '&4&lSkyBan &c>> &4%kickedplayer% &ea ete kick du serveur par &a%kickby% &epour la raison : &f%reason%'
+  kick-message-console: '&4&lSkyBan &c>> &4%kickedplayer% &ea ete kick du serveur par &a%console% &epour la raison : &f%reason%'
 
 utilisation-message:
   #Ces messages s'affiche quand on tappe une commande sans argument ou que la commande n'est pas correcte.
@@ -106,12 +122,15 @@ utilisation-message:
   utilisation-lookup: '&4&lSkyBan &c>> &eUtilisation : &b/lookup <player/IP>'
   utilisation-gunban: '&4&lSkyBan &c>> &eUtillisation : &b/gunban <player>'
   utilisation-gunbanip: '&4&lSkyBan &c>> &eUtillisation : &b/gunbanip <player/IP>'
+  utilisation-gkick: '&4&lSkyBan &c>> &eUtillisation : &b/gkick <player> <raison>'
+  utilisation-skyconvert: '&4&lSkyBan &c>> &eMauvais usage ! fait &b/skyconvert &epour voir la liste des sous-commandes'
 
 
 command-message:
-  #Ces messages sont utiliser comme raison de ban ou de mute par defaut.
+  #Ces messages sont utiliser comme raison de ban, de mute ou de kick par defaut.
   default-reason-ban: 'Bannis par un membre du staff ! '
   default-reason-mute: 'Mute par un membre du staff ! '
+  default-reason-kick: 'Kick par un membre du staff ! '
 
   #Ce message est utiliser pour prevenir le joueur qu'il est mute/ban permanent.
   muteperm: 'Mute a Vie'
@@ -153,7 +172,8 @@ lookup-info:
     line21: '&ePremière connection : &7%firstco%'
     line22: '&eNombre de Mute eu : &7%nbmute%'
     line23: '&eNombre de Ban eu : &7%nbban%'
-    line24: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line24: '&eNombre de Kick eu : &7%nbkick%'
+    line25: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
     error-message:
       #Messages qui s'ajoute au line du dessus si le joueur n'est pas bannis ou mute.
       noban: '&eLe Joueur &c%player% &en est pas &4bannis &e!'
@@ -200,7 +220,7 @@ time:
 
 
 help-command:
-  #Cette categorie est pour la commande d'aide
+  #Cette categorie est pour la commande d'aide.
   line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
   line1: ' '
   line2: '&6Bienvenue sur &4&lSkyBan &6Version &a1.0 &6!'
@@ -218,4 +238,57 @@ help-command:
   line14: '&b/gtempmute &c>> &ePermet de mute un joueur.'
   line15: '&b/gunmute &c>> &ePermet d unmute un joueur.'
   line16: '&b/lookup &c>> &ePermet de voir les information d un joueur/ip.'
-  line17: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  line17: '&b/gkick &c>> &ePermet de kick un joueur.'
+  line18: '&b/skyconvert &c>> &ePermet de changer de mode de sauvegarde.'
+  line19: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+
+
+convert-command:
+  #Cette categorie est pour la commande /skyconvert. Je ne vous conseil de ne pas y touché.
+  noargs:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: ' '
+    line2: '&cUtilisation :'
+    line3: ' '
+    line4: '&b/skyconvert convert <host mysql> <database name> <username> <password ou &e*@* &bsi pas de mot de passe>'
+    line5: '&eCette commande permet de changer de mode de sauvegarde.'
+    line6: ' '
+    line7: '&b/skyconvert status'
+    line8: '&eCette commande permet de voir le status de sauvegarde.'
+    line9: ' '
+    line10: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  status:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: ' '
+    line2: '&cStatus :'
+    line3: ' '
+    line4: '&eFichier sauvegarde : %file-status%'
+    line5: '&eMySql sauvegarde : %mysql-status%'
+    line6: ' '
+    line7: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  convert:
+    line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+    line1: ' '
+    line2: '&b/skyconvert convert <host mysql> <database name> <username> <password ou &e*@* &bsi pas de mot de passe>'
+    line3: '&eCette commande permet de changer de mode de sauvegarde fichier txt'
+    line4: '&een mode de sauvegarde mysql.'
+    line5: ' '
+    line6: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+
+
+
+convert-message:
+  #Cette categorie est pour la commande de convertion.
+  #la line0, line1 sont le haut du message que l'on reçois les differentes étapes.
+  line0: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='
+  line1: ' '
+  #les line2-* sont les informations que vous pouvez voir en faisant la commande.
+  line2-error: '&cErreur ! Annulation de la convertion !'
+  line2-file-write: '&eRéecriture du fichier de configuration...'
+  line2-connect-db: '&eConnection a la base de donnée en cours...'
+  line2-convert-info: '&eConvertion des données texte en donnée mysql...'
+  line2-connection-succes: '&aConnection réussi !'
+  line2-convert-succes: '&aConvertion reussi et terminée !'
+  #la line3, line4 sont le bas du message que l'on reçois les differentes étapes.
+  line3: ' '
+  line4: '&6&m&l==========&r&6&l[&r&4&lSkyBan&r&6&l]&6&m&l=========='

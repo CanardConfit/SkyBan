@@ -53,10 +53,7 @@ public class GBan extends Command {
 							} else if (sender instanceof ConsoleCommandSender) {	
 								SkyBan.main.sendBanMessageconsole(bannis, "console", reason, "5555");
 							}
-							String aaa = SkyBan.main.checkplayerinfo(args[0], "nbban");
-							int ccc = Integer.parseInt(aaa);
-							ccc++;
-							SkyBan.main.changeplayerinfo(args[0], "nbban", Integer.toString(ccc));
+							SkyBan.main.changeplayerinfo(args[0], "nbban");
 						} else if (reponse == bannis) {
 							sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.changecfgline(SkyBan.main.messages.getString("command-message.alreadyban"), "%player%", bannis))));
 						}

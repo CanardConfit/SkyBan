@@ -16,6 +16,7 @@ import net.md_5.bungee.event.EventHandler;
 
 public class JoinPlayerListener implements Listener {
 	
+	
 	public JoinPlayerListener(SkyBan skyban) {
 	}
 	@EventHandler

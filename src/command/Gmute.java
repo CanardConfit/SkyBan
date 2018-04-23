@@ -88,11 +88,7 @@ public class Gmute extends Command {
 					} else if (sender instanceof ConsoleCommandSender) {	
 						SkyBan.main.sendMuteMessageconsole(args[0], "console", reason, nummute);
 					}
-
-					String aaa = SkyBan.main.checkplayerinfo(args[0], "nbmute");
-					int ccc = Integer.parseInt(aaa);
-					ccc++;
-					SkyBan.main.changeplayerinfo(args[0], "nbmute", Integer.toString(ccc));
+					SkyBan.main.changeplayerinfo(args[0], "nbmute");
 				}
 			} catch (IOException e) {sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("utilisation-message.utilisation-gmute"))));
 			} catch (ParseException e) {sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("utilisation-message.utilisation-gmute"))));

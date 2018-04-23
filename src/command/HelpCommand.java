@@ -34,6 +34,7 @@ public class HelpCommand extends Command {
 		sender.sendMessage(new TextComponent(sky.changesymbole(msg.getString("help-command.line15"))));
 		sender.sendMessage(new TextComponent(sky.changesymbole(msg.getString("help-command.line16"))));
 		sender.sendMessage(new TextComponent(sky.changesymbole(msg.getString("help-command.line17"))));
+		sender.sendMessage(new TextComponent(sky.changesymbole(msg.getString("help-command.line18"))));
 
 	}
 

@@ -20,6 +20,15 @@ ban-activate: true
 mute-activate: true
 
 
+#Activate the command of kick (gkick).
+kick-activate: true
+
+#Enable backup by mysql.
+mysql: false
+host: 'localhost'
+database: 'server'
+username: 'root'
+password: ''
 #You can choose between 2 languages ​​for the moment, French (FR) or English (ENG)
 
 # /!\ Warning if you change language the messages and the configuration will be deleted and replace with the one in the language select /!\

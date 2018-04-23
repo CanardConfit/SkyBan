@@ -8,18 +8,25 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import ch.canardconfit.skyban.SkyBan;
+import ch.canardconfit.skyban.SqlConnection;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
 
 public class Lookup extends Command {
 
-	public Lookup(String name) {
+	private boolean mysql;
+	private SqlConnection sql;
+	
+	public Lookup(String name, SqlConnection sql, boolean mysql) {
 		super(name, "skyban.lookup");
+		this.mysql = mysql;
+		this.sql = sql;
 	}
 
 	@Override
@@ -38,6 +45,7 @@ public class Lookup extends Command {
 						String lastco = SkyBan.main.checkplayerinfo(args[0], "dco");
 						String nbban = SkyBan.main.checkplayerinfo(args[0], "nbban");
 						String nbmute = SkyBan.main.checkplayerinfo(args[0], "nbmute");
+						String nbkick = SkyBan.main.checkplayerinfo(args[0], "nbkick");
 						String firstco = SkyBan.main.checkplayerinfo(args[0], "pco");
 	
 						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line0"))));
@@ -86,7 +94,8 @@ public class Lookup extends Command {
 						sender.sendMessage(new TextComponent(SkyBan.main.changecfgline(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line21")), "%firstco%", firstco)));
 						sender.sendMessage(new TextComponent(SkyBan.main.changecfgline(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line22")), "%nbmute%", nbmute)));
 						sender.sendMessage(new TextComponent(SkyBan.main.changecfgline(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line23")), "%nbban%", nbban)));
-						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line24"))));
+						sender.sendMessage(new TextComponent(SkyBan.main.changecfgline(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line24")), "%nbkick%", nbkick)));
+						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.line25"))));
 					} else {
 						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.error-message.line0"))));
 						sender.sendMessage(new TextComponent(SkyBan.main.changecfgline(SkyBan.main.changesymbole(SkyBan.main.messages.getString("lookup-info.info-player.error-message.line1")), "%player%", args[0])));
@@ -127,60 +136,92 @@ public class Lookup extends Command {
 	
 	
 	private final String checkBan(String label, String player) throws IOException {
-		File dataFile = new File("plugins/SkyBan/banned-player.txt");
-		BufferedReader br = new BufferedReader(new FileReader(dataFile));
-		String line;
-		String rep = null;
-		while ((line = br.readLine()) != null) {
-			String[] part = line.split("\\|");
-			String name = part[0];
-			String mystaff = part[2];
-			String reason = part[4];
-			if (label.equalsIgnoreCase("name")) {
-				if (player.equals(name)) {
-					rep = name;
+		if (mysql == false) {
+			File dataFile = new File("plugins/SkyBan/banned-player.txt");
+			BufferedReader br = new BufferedReader(new FileReader(dataFile));
+			String line;
+			String rep = null;
+			while ((line = br.readLine()) != null) {
+				String[] part = line.split("\\|");
+				String name = part[0];
+				String mystaff = part[2];
+				String reason = part[4];
+				if (label.equalsIgnoreCase("name")) {
+					if (player.equals(name)) {
+						rep = name;
+					}
+				} else if (label.equalsIgnoreCase("mystaff")) {
+					if (player.equals(name)) {
+						rep = mystaff;
+					}
+				} else if (label.equalsIgnoreCase("reason")) {
+					if (player.equals(name)) {
+						rep = reason;
+					}
 				}
-			} else if (label.equalsIgnoreCase("mystaff")) {
-				if (player.equals(name)) {
-					rep = mystaff;
-				}
-			} else if (label.equalsIgnoreCase("reason")) {
-				if (player.equals(name)) {
-					rep = reason;
+			}
+			br.close();
+			return rep;
+		} else {
+			if (sql.asOfflineAccount(player, "")) {
+				ArrayList<String> ban = sql.getBan(player);
+				if (label.equalsIgnoreCase("name")) {
+					if (ban.get(1).equals("")) {
+						return null;
+					} else {
+						return player;
+					}
+				} else if (label.equalsIgnoreCase("mystaff")) {
+					return ban.get(0);
+				} else if (label.equalsIgnoreCase("reason")) {
+					return ban.get(3);
 				}
 			}
 		}
-		br.close();
-		return rep;
+		return null;
 	}
 	private final Date checkdate(String label, String player) throws IOException {
-		File dataFile = new File("plugins/SkyBan/banned-player.txt");
-		BufferedReader br = new BufferedReader(new FileReader(dataFile));
-		String line;
-		Date rep = null;
-		Date d = null;
-		while ((line = br.readLine()) != null) {
-			String[] part = line.split("\\|");
-			String name = part[0];
-			String unbandate = part[3];
-			String datebanned = part[1];
-			if (label.equalsIgnoreCase("unbandate")) {
-				SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
-				try {
-					d = date.parse(unbandate);
-				} catch (ParseException e) {e.printStackTrace();}
-				if (player.equals(name)) {rep = d;}
-			} else if (label.equalsIgnoreCase("datebanned")) {
-				SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
-				try {
-					d = date.parse(datebanned);
-				} catch (ParseException e) {e.printStackTrace();}
-				if (player.equals(name)) {rep = d;}
+		if (mysql == false) {
+			File dataFile = new File("plugins/SkyBan/banned-player.txt");
+			BufferedReader br = new BufferedReader(new FileReader(dataFile));
+			String line;
+			Date rep = null;
+			Date d = null;
+			while ((line = br.readLine()) != null) {
+				String[] part = line.split("\\|");
+				String name = part[0];
+				String unbandate = part[3];
+				String datebanned = part[1];
+				if (label.equalsIgnoreCase("unbandate")) {
+					SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
+					try {
+						d = date.parse(unbandate);
+					} catch (ParseException e) {e.printStackTrace();}
+					if (player.equals(name)) {rep = d;}
+				} else if (label.equalsIgnoreCase("datebanned")) {
+					SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
+					try {
+						d = date.parse(datebanned);
+					} catch (ParseException e) {e.printStackTrace();}
+					if (player.equals(name)) {rep = d;}
+				}
+				
 			}
-			
+			br.close();
+			return rep;
+		} else {
+			ArrayList<String> ban = sql.getBan(player);
+	
+			Date d = null;
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
+			try {
+				if (label.equalsIgnoreCase("unbandate")) {
+					d = date.parse(ban.get(2));
+				} else if (label.equalsIgnoreCase("datebanned")) {
+					d = date.parse(ban.get(1));
+				}
+			} catch (ParseException e) {e.printStackTrace();}
+			return d;
 		}
-		br.close();
-		return rep;
-		
 	}
 }

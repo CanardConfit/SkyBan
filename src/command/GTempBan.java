@@ -84,10 +84,7 @@ public class GTempBan extends Command {
 								} else if (sender instanceof ConsoleCommandSender) {	
 									SkyBan.main.sendBanMessageconsole(bannis, "console", reason, numban);
 								}
-								String aaa = SkyBan.main.checkplayerinfo(bannis, "nbban");
-								int ccc = Integer.parseInt(aaa);
-								ccc++;
-								SkyBan.main.changeplayerinfo(bannis, "nbban", Integer.toString(ccc));
+								SkyBan.main.changeplayerinfo(bannis, "nbban");
 							} else if (reponse == bannis) {
 								sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.changecfgline(SkyBan.main.messages.getString("command-message.alreadyban"), "%player%", bannis))));
 							}

@@ -47,16 +47,20 @@ public class GBanPlayer extends Command {
 				Date unbandate = null;
 				try {unbandate = date.parse(str);} catch (ParseException e1) {e1.printStackTrace();}
 				if (bannis == null) {
-					InetAddress bannisip = InetAddress.getByName(args[0]);
-					if (!(args[0].equalsIgnoreCase(SkyBan.main.checkIpBan("test", bannisip)))) {
-						SkyBan.main.addBanIp(bannisip, unbandate, sender.getName(), reason);
-						if (sender instanceof ProxiedPlayer) {	
-							SkyBan.main.sendBanIpMessage((ProxiedPlayer) sender, reason, "5555");
-						} else if (sender instanceof ConsoleCommandSender) {	
-							SkyBan.main.sendBanIpMessageconsole("console", reason, "5555");
+					if (SkyBan.main.checkInetAddress(args[0]) != false) {
+						InetAddress bannisip = InetAddress.getByName(args[0]);
+						if (!("/" + args[0]).equalsIgnoreCase(SkyBan.main.checkIpBan("test", bannisip))) {
+							SkyBan.main.addBanIp(bannisip, unbandate, sender.getName(), reason);
+							if (sender instanceof ProxiedPlayer) {	
+								SkyBan.main.sendBanIpMessage((ProxiedPlayer) sender, reason, "5555");
+							} else if (sender instanceof ConsoleCommandSender) {	
+								SkyBan.main.sendBanIpMessageconsole("console", reason, "5555");
+							}
+						} else {
+							sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.changecfgline(SkyBan.main.messages.getString("command-message.alreadyban"), "%player%", args[0]))));
 						}
 					} else {
-						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.changecfgline(SkyBan.main.messages.getString("command-message.alreadyban"), "%player%", bannis))));
+						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.messages.getString("utilisation-message.utilisation-gbanip"))));
 					}
 				} else {
 					InetAddress bannisip = bannis.getAddress().getAddress();
@@ -70,10 +74,7 @@ public class GBanPlayer extends Command {
 							SkyBan.main.sendBanIpMessageconsole("console", reason, "5555");
 							SkyBan.main.sendBanMessageconsole(bannis.getName(), "console", reason, "5555");
 						}
-						String aaa = SkyBan.main.checkplayerinfo(bannis.getName(), "nbban");
-						int ccc = Integer.getInteger(aaa);
-						ccc++;
-						SkyBan.main.changeplayerinfo(bannis.getName(), "nbban", Integer.toString(ccc));
+						SkyBan.main.changeplayerinfo(bannis.getName(), "nbban");
 					} else {
 						sender.sendMessage(new TextComponent(SkyBan.main.changesymbole(SkyBan.main.changecfgline(SkyBan.main.messages.getString("command-message.alreadyban"), "%player%", bannis))));
 					}
